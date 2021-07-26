@@ -15,7 +15,8 @@ public class QRScanManager {
         if (context == null) {
             return;
         }
-        FoundationContext.context = context;
+        FoundationContext.applicationContext = context.getApplicationContext();
+
         QRScanManager.callback = callback;
         context.startActivity(new Intent(context, QRScanActivity.class));
     }

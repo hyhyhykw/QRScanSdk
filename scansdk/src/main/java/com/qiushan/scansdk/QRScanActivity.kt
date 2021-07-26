@@ -80,10 +80,10 @@ class QRScanActivity : AppCompatActivity(), QRScanResultCallback {
 
             try {
                 val uri =
-                    Uri.parse("android.resource://" + FoundationContext.context!!.packageName + "/" + R.raw.common_voice_1)
-                soundPlayer!!.setDataSource(FoundationContext.context!!, uri)
-                soundPlayer!!.setVolume(1.0f, 1.0f)
-                soundPlayer!!.prepare()
+                    Uri.parse("android.resource://" + applicationContext.packageName + "/" + R.raw.common_voice_1)
+                soundPlayer?.setDataSource(this, uri)
+                soundPlayer?.setVolume(1.0f, 1.0f)
+                soundPlayer?.prepare()
             } catch (var3: IOException) {
                 soundPlayer = null
             }

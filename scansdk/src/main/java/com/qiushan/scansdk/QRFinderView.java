@@ -24,13 +24,13 @@ public final class QRFinderView extends View {
     private static final int SPEEN_DISTANCE = 3;
     private static final int MIDDLE_LINE_WIDTH = 2;
     private static final int MIDDLE_LINE_PADDING = 4;
-    private Paint paint = new Paint();
+    private final Paint paint = new Paint();
     private final int maskColor;
     Bitmap scanline;
     private int slideTop;
     boolean isFirst;
     private final int resultPointColor;
-    private Collection<ResultPoint> possibleResultPoints = new HashSet(5);
+    private Collection<ResultPoint> possibleResultPoints = new HashSet<>(5);
     private Collection<ResultPoint> lastPossibleResultPoints;
     private Rect frame;
 
@@ -49,15 +49,7 @@ public final class QRFinderView extends View {
         if (frame == null) {
             return;
         }
-        if (this.scanline == null) {
-            Bitmap bm = BitmapFactory.decodeResource(this.getResources(), R.drawable.scan_line_icon);
-            if (bm != null) {
-                this.scanline = Bitmap.createScaledBitmap(bm, frame.width(), DeviceUtil.getPixelFromDip(7.0F), false);
-                if (bm != this.scanline) {
-                    bm.recycle();
-                }
-            }
-        }
+        createScanLine();
 
         if (!this.isFirst) {
             this.isFirst = true;
@@ -107,7 +99,7 @@ public final class QRFinderView extends View {
         if (currentPossible.isEmpty()) {
             this.lastPossibleResultPoints = null;
         } else {
-            this.possibleResultPoints = new HashSet(5);
+            this.possibleResultPoints = new HashSet<>(5);
             this.lastPossibleResultPoints = currentPossible;
             this.paint.setAlpha(255);
             this.paint.setColor(this.resultPointColor);
@@ -119,6 +111,18 @@ public final class QRFinderView extends View {
         }
 
         this.postInvalidateDelayed(14L, frame.left, frame.top, frame.right, frame.bottom);
+    }
+
+    private void createScanLine() {
+        if (this.scanline == null) {
+            Bitmap bm = BitmapFactory.decodeResource(this.getResources(), R.drawable.scan_line_icon);
+            if (bm != null) {
+                this.scanline = Bitmap.createScaledBitmap(bm, frame.width(), DeviceUtil.getPixelFromDip(7.0F), false);
+                if (bm != this.scanline) {
+                    bm.recycle();
+                }
+            }
+        }
     }
 
     public void drawViewfinder() {
